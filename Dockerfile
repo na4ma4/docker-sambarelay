@@ -8,6 +8,9 @@ RUN apt-get update \
  && apt-get install --no-install-recommends -qy samba \
  && rm -rf /var/lib/apt/lists/*
 
+LABEL org.opencontainers.image.source="https://github.com/na4ma4/docker-sambarelay" \
+  org.opencontainers.image.title="Docker container for relaying SMB shares to clients that do not support security"
+
 COPY smb.conf.tmpl /etc/samba/smb.conf.tmpl
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
