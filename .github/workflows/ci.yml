@@ -7,6 +7,9 @@ on:
 
 jobs:
   ci-build:
+    permissions:
+      contents: read
+      packages: write
     uses: na4ma4/actions/.github/workflows/docker-release.yml@main
     secrets:
       docker_github_token: ${{ secrets.GITHUB_TOKEN }}
