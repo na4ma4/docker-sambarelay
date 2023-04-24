@@ -1,6 +1,7 @@
-name: Image Release
+name: CI
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
