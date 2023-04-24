@@ -1,0 +1,12 @@
+name: Image Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ci-build:
+    uses: na4ma4/actions/.github/workflows/docker-release.yml@main
+    secrets:
+      docker_github_token: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      image: ghcr.io/na4ma4/docker-sambarelay
