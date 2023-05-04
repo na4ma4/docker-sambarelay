@@ -6,7 +6,24 @@ on:
   workflow_dispatch:
 
 jobs:
+  unit-test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Install gomplate
+      uses: teaxyz/setup@v0
+      with:
+        +: |
+          gomplate.ca
+
+    - name: Run Makefile Tests Target
+      run: make test
+
   ci-build:
+    needs: unit-test
     permissions:
       packages: write
     uses: na4ma4/actions/.github/workflows/docker-release.yml@main

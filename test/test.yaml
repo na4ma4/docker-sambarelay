@@ -7,3 +7,7 @@
 - name: testshare3
   comment: test share 3
 - name: testshare4
+- name: testshare5
+  browsable: no
+- name: testshare6
+  readonly: yes

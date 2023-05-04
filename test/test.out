@@ -1,0 +1,67 @@
+#======================= Share Definitions =======================
+
+[testshare1]
+   comment = test share 1
+   path = /mnt/testshare1
+   read only = no
+   writeable = yes
+   browseable = yes
+   guest ok = yes
+   public = yes
+   available = yes
+   veto files = /#*/._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+
+[testshare2]
+   path = /mnt/testshare2
+   read only = no
+   writeable = yes
+   browseable = yes
+   guest ok = yes
+   public = yes
+   available = yes
+   veto files = /#*/._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+
+[testshare3]
+   comment = test share 3
+   read only = no
+   writeable = yes
+   browseable = yes
+   guest ok = yes
+   public = yes
+   available = yes
+   veto files = /#*/._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+
+[testshare4]
+   read only = no
+   writeable = yes
+   browseable = yes
+   guest ok = yes
+   public = yes
+   available = yes
+   veto files = /#*/._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+
+[testshare5]
+   read only = no
+   writeable = yes
+   browseable = yes
+   guest ok = yes
+   public = yes
+   available = yes
+   veto files = /#*/._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+
+[testshare6]
+   read only = yes
+   writeable = no
+   browseable = yes
+   guest ok = yes
+   public = yes
+   available = yes
+   veto files = /#*/._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+
+

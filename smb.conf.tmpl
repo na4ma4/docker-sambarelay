@@ -1,16 +1,69 @@
+# Some config copied from https://gist.github.com/mafredri/e88401c91489232e92e493d0e02912ef
+
 [global]
+   log level = 1
    workgroup = WORKGROUP
-   log file = /var/log/samba.log
-   max log size = 1000
-   #logging = file
-   logging = ringbuf
+   server string = Samba Server
    server role = standalone server
-   obey pam restrictions = no
-   unix password sync = no
-   pam password change = no
+   log file = /dev/stdout
+   max log size = 0
+
+   # Disable printers.
+   load printers = no
+   printing = bsd
+   printcap name = /etc/printcap
+   printcap cache time = 0
+   disable spoolss = yes
+
+   pam password change = yes
    map to guest = bad user
-   usershare allow guests = no
-   client min protocol = NT1
+   usershare allow guests = yes
+   create mask = 0664
+   force create mode = 0664
+   directory mask = 0775
+   force directory mode = 0775
+   guest account = user
+
+   # ===========================
+   # PlayStations 2 OPL settings
+   # ===========================
+   # Lower the minimum protocol to NT1 (a SMB1 dialect), this is required since
+   # Samba 4.11 changed the default and deprecated SMB1.
+   # See https://github.com/ifcaro/Open-PS2-Loader/issues/86 and
+   # https://github.com/ps2dev/ps2sdk/issues/72 for future SMB2 support.
+   server min protocol = NT1
+   server signing = disabled
+   smb encrypt = disabled
+
+   # Tweak socket options for lower delay. We also set TCP_KEEPIDLE to 20s which is
+   # about what it takes to reset the console and launch OPL, this avoids keeping
+   # file locks around for too long. We could try to optimize socket buffer sizes
+   # but Linux should do this automatically.
+   # TODO(mafredri): Do more testing with TCP_QUICKACK.
+   socket options = TCP_NODELAY TCP_KEEPIDLE=20 IPTOS_LOWDELAY SO_KEEPALIVE
+   keepalive = 0
+
+   # ------------------------------------
+   # Attempt to speed up reads and writes
+   # ------------------------------------
+   # This setting only works for oplocked files but OPL doesn't oplock.
+   #write cache size = 0
+   # Speed up directory listings.
+   getwd cache = yes
+   # Remove audio stutter in FMVs.
+   large readwrite = yes
+   # Disable asynchronous reads and writes.
+   aio read size = 0
+   aio write size = 0
+   # This might help with performance as the system doesn't need to check locks.
+   # OPL is the only client so we don't care about locks anyway.
+   strict locking = no
+
+   # ----
+   # Misc
+   # ----
+   # Allow symlinks, useful for symlinking saves for multi-disk games.
+   follow symlinks = yes
 
 #======================= Share Definitions =======================
 
@@ -22,7 +75,22 @@
 {{- if (index $share "path") }}
    path = {{ $share.path }}
 {{- end }}
-   browseable = yes
+{{- if conv.ToBool (index $share "readonly") }}
    read only = yes
+   writeable = no
+{{- else }}
+   read only = no
+   writeable = yes
+{{- end }}
+{{- if not (conv.ToBool (index $share "browsable")) }}
+   browseable = yes
+{{- else }}
+   browseable = no
+{{- end }}
    guest ok = yes
+   public = yes
+   available = yes
+   veto files = /#*/._*/.apdisk/.AppleDouble/.DS_Store/.TemporaryItems/.Trashes/desktop.ini/ehthumbs.db/Network Trash Folder/Temporary Items/Thumbs.db/
+   delete veto files = yes
+
 {{ end }}
